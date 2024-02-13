@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       Int        @id @default(autoincrement())
+  role     Role       @default(USER)
+  username String     @unique @db.VarChar(30)
+  password String     @db.VarChar(72)
+  email    String     @db.VarChar(70)
+  phone    String     @db.VarChar(10)
+  User_Car User_Car[]
+
+  @@map("users")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model User_Car {
+  id      Int       @id @default(autoincrement())
+  user    User      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId  Int
+  car     Car       @relation(fields: [carId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  carId   Int
+  Reseved Reseved[]
+}
+
+model Reseved {
+  id           Int      @id @default(autoincrement())
+  status       Status   @default(RESERVED)
+  reserverDate DateTime @map("reserver_date")
+  userCarId    User_Car @relation(fields: [user_carId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user_carId   Int      @map("user_car_id")
+}
+
+model Car {
+  id       Int        @id @default(autoincrement())
+  vehicle  String
+  User_Car User_Car[]
+}
+
+enum Status {
+  RESERVED
+  UNRESERVED
+}
