@@ -11,13 +11,13 @@ datasource db {
 }
 
 model User {
-  id       Int        @id @default(autoincrement())
-  role     Role       @default(USER)
-  username String     @unique @db.VarChar(30)
-  password String     @db.VarChar(72)
-  email    String     @db.VarChar(70)
-  phone    String     @db.VarChar(10)
-  User_Car User_Car[]
+  id       Int    @id @default(autoincrement())
+  role     Role   @default(USER)
+  username String @unique @db.VarChar(30)
+  password String @db.VarChar(72)
+  email    String @db.VarChar(70)
+  phone    String @db.VarChar(10)
+  Car      Car[]
 
   @@map("users")
 }
@@ -27,30 +27,22 @@ enum Role {
   ADMIN
 }
 
-model User_Car {
-  id      Int       @id @default(autoincrement())
-  user    User      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId  Int
-  car     Car       @relation(fields: [carId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  carId   Int
-  Reseved Reseved[]
-}
-
 model Reseved {
   id           Int      @id @default(autoincrement())
-  status       Status   @default(RESERVED)
+  car_id       String
   reserverDate DateTime @map("reserver_date")
-  userCarId    User_Car @relation(fields: [user_carId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  user_carId   Int      @map("user_car_id")
+  phone        String   @db.VarChar(10)
 }
 
 model Car {
-  id       Int        @id @default(autoincrement())
-  vehicle  String
-  User_Car User_Car[]
+  id      Int     @id @default(autoincrement())
+  car_id  String
+  cartype CarType
+  user    User    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user_id Int
 }
 
-enum Status {
-  RESERVED
-  UNRESERVED
+enum CarType {
+  MOTORYCLE
+  CAR
 }

@@ -6,25 +6,18 @@ const password = bcrypt.hashSync('123456')
 const userData = [
   { username : 'andy', password, email: 'andy@ggg.mail',phone:'0123456789',role:'USER' },
   { username : 'bobby', password, email: 'bobby@ggg.mail',phone:'0123456789',role:'USER' },
-  { username : 'candy', password, email: 'candy@ggg.mail',phone:'0123456789',role:'USER' },
+  { username : 'candy', password, email: 'candy@ggg.mail',phone:'0123456789',role:'ADMIN' },
 ]
 
 const resevedData = [
-  { reserverDate: new Date(), user_carId: 1 , status:'RESERVED'},
-  { reserverDate: new Date(), user_carId: 2 , status:'RESERVED'},
-  { reserverDate: new Date(), user_carId: 3 , status:'RESERVED'},
-]
-
-const userCarIdData = [
-  { userId: 1, carId: 1 },
-  { userId: 2, carId: 2 },
-  { userId: 3, carId: 3 },
+  { reserverDate: new Date() , car_id:'DE5H7',phone:'0123456789' },
+  { reserverDate: new Date() , car_id:'DE5H7',phone:'0123456789'},
+  { reserverDate: new Date() , car_id:'DE5H7',phone:'0123456789'},
 ]
 
 const carData = [
-  { vehicle:'car'},
-  { vehicle:'motorycle'},
-  { vehicle:'bicleclo'},
+  { car_id:'DE5H7',cartype:'MOTORYCLE',user_id:1},
+  { car_id:'DE5H7',cartype:'CAR',user_id:1}
 ]
 
 const run = async () => {
@@ -34,10 +27,6 @@ const run = async () => {
 
   await prisma.car.createMany({
     data : carData
-  })
-  
-  await prisma.user_Car.createMany({
-    data: userCarIdData
   })
 
   await prisma.reseved.createMany({
