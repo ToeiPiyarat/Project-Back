@@ -11,38 +11,35 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  role     Role   @default(USER)
-  username String @unique @db.VarChar(30)
-  password String @db.VarChar(72)
-  email    String @db.VarChar(70)
-  phone    String @db.VarChar(10)
-  Car      Car[]
+  id       Int       @id @default(autoincrement())
+  
+  username String    @unique @db.VarChar(30)
+  password String    @db.VarChar(72)
+  email    String    @db.VarChar(70)
+  phone    String    @db.VarChar(10)
+
+  Reseved  Reseved[]
 
   @@map("users")
 }
 
-enum Role {
-  USER
-  ADMIN
-}
+
 
 model Reseved {
-  id           Int      @id @default(autoincrement())
-  car_id       String
-  reserverDate DateTime @map("reserver_date")
-  phone        String   @db.VarChar(10)
+  id               Int          @id @default(autoincrement())
+  carRegisteration String       @map("car_registeration")
+  reserverDate     DateTime     @map("reserver_date")
+  phone            String       @db.VarChar(10)
+  user             User         @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user_id          Int
+  ShowStatus       ShowStatus[]
 }
 
-model Car {
-  id      Int     @id @default(autoincrement())
-  car_id  String
-  cartype CarType
-  user    User    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  user_id Int
+
+
+model ShowStatus {
+  id         Int     @id @default(autoincrement())
+  reseved    Reseved @relation(fields: [reseved_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  reseved_id Int
 }
 
-enum CarType {
-  MOTORYCLE
-  CAR
-}
