@@ -14,8 +14,19 @@ exports.showRerved = async (req,res,next) => {
     }
 }
 
+exports.adminShowRerved = async (req,res,next) => {
+    try {
+        const rs = await db.reseved.findMany({})
+        // console.log(rs)
+        res.json(rs)
+    } catch (error) {
+        next(error)
+    }
+}
+
+
 exports.creacteRerved = async (req, res, next) => {
-    const { reserverDate , carRegisteration, phone } = req.body
+    const { reserverDate , carRegisteration, phone, status } = req.body
 
     try {
         const reserved = await db.reseved.create({
@@ -23,6 +34,7 @@ exports.creacteRerved = async (req, res, next) => {
                 reserverDate: new Date(reserverDate),
                 carRegisteration,
                 phone,
+                status,
                 user_id: Number(req.user.id)
             }
         })
@@ -31,6 +43,7 @@ exports.creacteRerved = async (req, res, next) => {
     } catch (error) {
         next(error)
     }
+    
 }
 
 exports.deleteRerved = async (req, res, next ) => {
