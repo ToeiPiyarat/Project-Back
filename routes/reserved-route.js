@@ -6,6 +6,7 @@ const authenticate = require('../middlewares/authenticate')
 router.get("/show", authenticate, reservedController.showRerved)
 router.get("/adminShow", authenticate, reservedController.adminShowRerved)
 router.post("/creacte",authenticate, reservedController.creacteRerved)
+router.patch("/update",authenticate, reservedController.updateProfire)
 router.delete("/delete/:reservedId", reservedController.deleteRerved)
 
 module.exports = router

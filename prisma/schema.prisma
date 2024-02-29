@@ -38,12 +38,6 @@ model Reseved {
   status           Status
 }
 
-// model ShowStatus {
-//   id         Int     @id @default(autoincrement())
-//   reseved    Reseved @relation(fields: [reseved_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-//   reseved_id Int
-// }
-
 enum Status {
   RESERVED
   CANCEL

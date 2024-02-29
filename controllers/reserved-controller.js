@@ -61,3 +61,22 @@ exports.deleteRerved = async (req, res, next ) => {
         
     }
 }
+
+exports.updateProfire = async (req, res, next) => {
+    const {email, phone} = req.body
+    try {
+        const reserved = await db.user.update({
+            where: {
+                id: req.user.id
+            },
+            data: {
+                email,
+                phone
+            }
+        })
+        res.json(reserved)
+
+    } catch (error) {
+        next(error)
+    }
+}
