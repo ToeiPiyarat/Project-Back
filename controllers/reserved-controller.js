@@ -34,7 +34,7 @@ exports.creacteRerved = async (req, res, next) => {
                 reserverDate: new Date(reserverDate),
                 carRegisteration,
                 phone,
-                status,
+                status:"RESERVED",
                 user_id: Number(req.user.id)
             }
         })
