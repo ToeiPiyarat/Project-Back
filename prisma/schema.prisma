@@ -11,14 +11,14 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  role     Role
-  username String @unique @db.VarChar(30)
-  password String @db.VarChar(72)
-  email    String @db.VarChar(70)
-  phone    String @db.VarChar(10)
-
-  Reseved Reseved[]
+  id            Int             @id @default(autoincrement())
+  role          Role
+  username      String          @unique @db.VarChar(30)
+  password      String          @db.VarChar(72)
+  email         String          @db.VarChar(70)
+  phone         String          @db.VarChar(10)
+  Reseved       Reseved[]
+  Vehiclenumber Vehiclenumber[]
 
   @@map("users")
 }
@@ -29,16 +29,24 @@ enum Role {
 }
 
 model Reseved {
-  id               Int      @id @default(autoincrement())
-  carRegisteration String   @map("car_registeration")
-  reserverDate     DateTime @map("reserver_date")
-  phone            String   @db.VarChar(10)
-  user             User     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  user_id          Int
-  status           Status
+  id            Int      @id @default(autoincrement())
+  vehicleNumber String
+  reserverDate  DateTime @map("reserver_date")
+  user          User     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user_id       Int
+  status        Status
 }
 
 enum Status {
   RESERVED
   CANCEL
+}
+
+model Vehiclenumber {
+  id            Int    @id @default(autoincrement())
+  vehicleNumber String
+  brand         String
+  model         String
+  user          User   @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user_id       Int
 }

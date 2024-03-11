@@ -25,26 +25,29 @@ exports.adminShowRerved = async (req,res,next) => {
 }
 
 
-exports.creacteRerved = async (req, res, next) => {
-    const { reserverDate , carRegisteration, phone, status } = req.body
-
+exports.createReserved = async (req, res, next) => {
+    const { reserverDate, vehicleNumber, brand, model } = req.body;
+  
     try {
-        const reserved = await db.reseved.create({
-            data:{
-                reserverDate: new Date(reserverDate),
-                carRegisteration,
-                phone,
-                status:"RESERVED",
-                user_id: Number(req.user.id)
-            }
-        })
-        console.log(reserved);
-        res.json(reserved)
+      
+      const reserved = await db.reseved.create({
+        data: {
+          reserverDate: new Date(reserverDate),
+          vehicleNumber,
+          brand,
+          status: "RESERVED",
+          model,
+          user_id: Number(req.user.id)
+        }
+      });
+  
+      console.log(reserved);
+      res.json(reserved);
     } catch (error) {
-        next(error)
+      next(error);
     }
-    
-}
+  };
+  
 
 exports.deleteRerved = async (req, res, next ) => {
     const {reservedId} = req.params
@@ -80,3 +83,4 @@ exports.updateProfire = async (req, res, next) => {
         next(error)
     }
 }
+
