@@ -84,3 +84,20 @@ exports.updateProfire = async (req, res, next) => {
     }
 }
 
+exports.updatererved = async (req, res, next) => {
+    const {vehicleNumber} = req.body
+    try {
+        const reserved = await db.reseved.update({
+            where: {
+                id: req.user.id
+            },
+            data: {
+                vehicleNumber
+            }
+        })
+        res.json(reserved)
+
+    } catch (error) {
+        next(error)
+    }
+}
