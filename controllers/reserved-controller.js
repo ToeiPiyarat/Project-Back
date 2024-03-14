@@ -85,14 +85,17 @@ exports.updateProfire = async (req, res, next) => {
 }
 
 exports.updatererved = async (req, res, next) => {
-    const {vehicleNumber} = req.body
+
+    const {id} = req.params
+    const {vehicleNumber, reserverDate} = req.body
     try {
         const reserved = await db.reseved.update({
             where: {
-                id: req.user.id
+                id:Number(id)
             },
             data: {
-                vehicleNumber
+                vehicleNumber,
+                reserverDate: new Date(reserverDate)
             }
         })
         res.json(reserved)
